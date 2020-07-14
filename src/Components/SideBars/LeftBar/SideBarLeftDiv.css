@@ -1,0 +1,25 @@
+.SideBarLeftDiv {
+    background-color: #303960;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.SideBarLeftDiv-Subjects {
+    text-decoration: none;
+    color: #e5e5e5;
+    background: #303960;
+    outline: none;
+    border: none;
+    padding: 2rem;
+    border-bottom: 1px solid #e5e5e583;
+    font-size: 1.5rem;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.SideBarLeftDiv-Subjects:hover {
+    cursor: pointer;
+    background-color: #243064;
+}

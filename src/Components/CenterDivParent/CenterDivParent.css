@@ -1,0 +1,40 @@
+.CenterDivParent {
+    background-color: #fff;
+    height: 100%;
+    width: 100%;
+    color: #303960;
+    padding: 2rem;
+}
+
+.CenterDivParent-Subject {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 2rem;
+}
+
+.chapter-buttons {
+    font-family: 'Roboto mono', monospace;
+    min-width: 40%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 5rem;
+    margin: 2% 2.5%;
+    border: none;
+    font-size: 1.45rem;
+    color: #1c223b;
+    background-color: #ea9a96;
+}
+
+.chapter-buttons:hover {
+    cursor: pointer;
+}
+
+.subject-name {
+    display: flex;
+    /* justify-content: space-between; */
+    border-bottom: 1px solid #303960;
+    padding-bottom: 2rem;
+}

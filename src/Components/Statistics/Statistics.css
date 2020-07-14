@@ -1,0 +1,40 @@
+.Statistics {
+    border-top: 2rem solid #303960;
+    background-color: #fff;
+    color: #303960;
+    /* height: 100%; */
+    padding: 2rem;
+}
+
+.Statistics-details {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #303960;
+    padding-bottom: 2rem;
+}
+
+.Statistics-body {
+    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Statistics-body div {
+    padding: 1rem 0;
+}
+
+.Statistics-guage-chart {
+    width: 100%;
+    padding-bottom: 2rem;
+}
+
+.guage-chart {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid red; */
+}

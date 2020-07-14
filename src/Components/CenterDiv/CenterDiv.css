@@ -1,0 +1,63 @@
+.CenterDiv {
+    background-color: #e5e5e5;
+    height: 100%;
+    width: 100%;
+    color: #303960;
+}
+
+.CenterDiv-PrevNextButtons {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem;
+}
+
+.CenterDiv-remarks {
+    height: 5%;
+    background-color: #ffffff;
+}
+
+.remarks-hide {
+    display: none;
+}
+
+.prevButton,
+.nextButton,
+.skipButton {
+    border: none;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    padding: 2rem;
+    margin: 0 1rem;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 2.5rem;
+}
+
+.skipButton {
+    width: 20%;
+}
+
+.prevButton:hover,
+.nextButton:hover,
+.skipButton:hover {
+    cursor: pointer;
+}
+
+/* .nextButton { */
+.skipButton {
+    background-color: #2e3b75e5;
+    color: #f9f9f9;
+}
+
+.fa-long-arrow-alt-right {
+    padding-left: 1rem;
+}
+
+.fa-long-arrow-alt-left {
+    padding-right: 1rem;
+}

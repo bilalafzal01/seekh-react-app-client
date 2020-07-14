@@ -1,0 +1,64 @@
+.SideBarRightDiv,
+.SideBarRightDiv-User,
+.SideBarRightDiv-Links {
+    display: flex;
+    flex-direction: column;
+}
+
+.SideBarRightDiv {
+    background-color: #303960;
+    color: #e5e5e5;
+    width: 100%;
+    height: 100%;
+}
+
+.SideBarRightDiv-User {
+    align-items: center;
+    padding: 2rem 0 1rem 0;
+}
+
+.User-Picture {
+    border-radius: 50%;
+    width: 30%;
+}
+
+.User-Name {
+    padding: 2rem;
+}
+
+.custom-Google-Button,
+.custom-Google-logout-Button {
+    text-align: center;
+    padding: 2rem 0rem;
+    border: none;
+    font-family: 'Roboto mono', monospace;
+    font-size: 1.5rem;
+    background-color: #f8b24f;
+    color: #333131;
+}
+
+.custom-Google-logout-Button {
+    background-color: #e5e5e5;
+}
+
+.custom-Google-Button:hover,
+.custom-Google-logout-Button:hover {
+    cursor: pointer;
+}
+
+.Links {
+    padding: 2rem;
+    text-decoration: none;
+    background: #303960;
+    outline: none;
+    color: #e5e5e5;
+    border: none;
+    border-bottom: 1px solid #e5e5e583;
+    font-size: 1.5rem;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.Links:hover {
+    cursor: pointer;
+    background-color: #243064;
+}

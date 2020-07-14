@@ -1,0 +1,23 @@
+.mcq {
+    background: #e7e7e7;
+}
+
+.mcq-subject {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 0 auto;
+}
+
+.mcq-subject-span {
+    font-size: .85rem;
+}
+
+.mcq-statement {
+    margin: 0;
+    font-weight: 600;
+}
+
+.mcq-statement span {
+    font-weight: 400;
+}

@@ -1,0 +1,137 @@
+.Question {
+    width: 100%;
+    background-color: #fff;
+    /* min-height: 65%; */
+    padding: 2rem;
+    text-align: left;
+}
+
+.Question-details {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #303960;
+    padding-bottom: 2rem;
+}
+
+.Question-statement {
+    display: flex;
+    text-align: justify;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.Question-number {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1.5rem;
+}
+
+.quickAccessButton {
+    background-color: #fff;
+    border: none;
+    font-size: 2rem;
+    color: #303960;
+    position: relative;
+    display: inline-block;
+    padding: 0 1rem;
+}
+
+.quickAccessButton:focus {
+    outline: none;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    background-color: #303960;
+    color: #fff;
+    text-align: center;
+    padding: .5rem .2rem;
+    font-size: 1.25rem;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    width: 12rem;
+    margin-top: 1rem;
+    top: 100%;
+    left: 50%;
+    margin-left: -6rem;
+    border: 1px solid #e5e5e5;
+    font-family: 'Roboto mono', monospace;
+}
+
+.quickAccessButton:hover .tooltip-text {
+    visibility: visible;
+}
+
+.quickAccessButton:hover {
+    cursor: pointer;
+}
+
+.Question-options {
+    padding: 2rem 2rem 0 2rem;
+}
+
+.Question-options-one,
+.Question-options-two {
+    display: flex;
+    padding: 2rem;
+    background-color: #e5e5e5;
+    justify-content: space-around;
+}
+
+.Question-options-two {
+    padding-top: 0;
+}
+
+.options {
+    margin: 2rem;
+    width: 100%;
+    text-align: center;
+    height: 100%;
+    font-size: 2rem;
+    color: #303960;
+    padding: 2rem;
+    background-color: #f8b24f;
+    font-family: 'Roboto mono', monospace;
+}
+
+.options:hover {
+    cursor: pointer;
+    background-color: #f7c075;
+    color: #333131;
+}
+
+.Question-options-option1,
+.Question-options-option3 {
+    margin-right: 1rem;
+    border: 1px solid #000000;
+    border: none;
+}
+
+.Question-options-option2,
+.Question-options-option4 {
+    margin-left: 1rem;
+    border: 1px solid #000000;
+    border: none;
+}
+
+.correctAns {
+    background-color: #81eb73;
+}
+
+.correctAns:hover {
+    background-color: rgb(101, 223, 85);
+}
+
+.wrongAns {
+    background-color: #d9455f;
+    color: #e5e5e5;
+}
+
+.wrongAns:hover {
+    background-color: #da5b72;
+    color: #e5e5e5;
+}

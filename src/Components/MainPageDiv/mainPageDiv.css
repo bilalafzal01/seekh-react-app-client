@@ -1,0 +1,38 @@
+.mainPageDiv {
+    font-size: 2rem;
+    max-width: 100vw;
+    background-color: #303960;
+    color: #e5e5e5;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.mainPageDiv .row {
+    width: 100%;
+    text-align: center;
+}
+
+.mainPageDiv-Row-One {
+    padding: 2rem;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #e5e5e583;
+}
+
+.mainPageDiv-Row-Two {
+    display: flex;
+    min-height: 90vh;
+}
+
+.mainPageDiv-SideBar-Left,
+.mainPageDiv-SideBar-Right {
+    min-width: 15vw;
+    max-width: 15vw;
+}
+
+.mainPageDiv-SideBar-Right {}
+
+.mainPageDiv-Center {
+    width: 70vw;
+}
