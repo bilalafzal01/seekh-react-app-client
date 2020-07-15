@@ -27,6 +27,7 @@ class CenterDiv extends Component {
       userScore: 0,
       bookmarks: [1],
       uselessVal: 420,
+      attemptedMCQs: [1],
     };
     this.handleAnswerClick = this.handleAnswerClick.bind(this);
     this.handleNextClick = this.handleNextClick.bind(this);
@@ -43,9 +44,21 @@ class CenterDiv extends Component {
         `http://localhost:5000/mcqs/one?subject=${this.props.activePath}&chapter=${this.props.chapterSelected}`
       );
       // store user bookmarks in the state too
-      let bookmarks = await axios.get(
-        `http://localhost:5000/users/bookmarks?userID=${this.props.user.googleId}`
-      );
+      let bookmarks = null;
+      let userAttemptedMCQS = null;
+      if (this.props.user) {
+        bookmarks = await axios.get(
+          `http://localhost:5000/users/bookmarks?userID=${this.props.user.googleId}`
+        );
+        // ! write code to get user here.
+        let userFromApi = await axios.get(
+          `http://localhost:5000/users/user?userID=${this.props.user.googleId}`
+        );
+        userAttemptedMCQS = userFromApi.data.mcqsAttempted;
+      } else {
+        bookmarks = { data: { bookmarks: [1] } };
+        userAttemptedMCQS = { data: { userAttemptedMCQS: [1] } };
+      }
       if (this.props.activePath === "default") {
         this.setState({
           loaded: false,
@@ -66,13 +79,15 @@ class CenterDiv extends Component {
             "Default",
           ],
           bookmarks: bookmarks.data.bookmarks,
+          attemptedMCQs: userAttemptedMCQS,
         });
+        this.handleUserAnswerPopulation();
       }
     } catch (err) {
       console.error(err);
     }
   }
-  async componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps, prevState) {
     if (prevProps.activePath !== this.props.activePath) {
       console.log(`in here - 1`);
       let productionUrl = `http://ec2-54-254-236-164.ap-southeast-1.compute.amazonaws.com:5000/mcqs/one?subject=${this.props.activePath}`;
@@ -82,9 +97,20 @@ class CenterDiv extends Component {
           `http://localhost:5000/mcqs/one?subject=${this.props.activePath}&chapter=${this.props.chapterSelected}`
         );
         // store user bookmarks in the state too
-        let bookmarks = await axios.get(
-          `http://localhost:5000/users/bookmarks?userID=${this.props.user.googleId}`
-        );
+        let bookmarks = null;
+        let userAttemptedMCQS = null;
+        if (this.props.user) {
+          bookmarks = await axios.get(
+            `http://localhost:5000/users/bookmarks?userID=${this.props.user.googleId}`
+          );
+          // ! write code to get user here.
+          let userFromApi = await axios.get(
+            `http://localhost:5000/users/user?userID=${this.props.user.googleId}`
+          );
+          userAttemptedMCQS = userFromApi.data.mcqsAttempted;
+        } else {
+          bookmarks = { data: { bookmarks: [1] } };
+        }
         if (this.props.activePath === "default") {
           this.setState({
             loaded: false,
@@ -97,6 +123,7 @@ class CenterDiv extends Component {
             mcqs: mcq.data,
             userAns: ["Default", "Default", "Default", "Default", "Default"],
             bookmarks: bookmarks.data.bookmarks,
+            attemptedMCQs: userAttemptedMCQS,
           });
         }
       } catch (err) {
@@ -104,14 +131,66 @@ class CenterDiv extends Component {
       }
     } else {
       // code here to update state for bookmarks
-      let tempBookmarks = await axios.get(
-        `http://localhost:5000/users/bookmarks?userID=${this.props.user.googleId}`
-      );
-      this.setState({
-        bookmarks: tempBookmarks.data.bookmarks,
-      });
+      let tempBookmarks = null;
+      let userAttemptedMCQS = null;
+      if (this.state.uselessVal !== prevState.uselessVal) {
+        if (this.props.user) {
+          if (this.props.user.googleId) {
+            console.log(this.props.user);
+            tempBookmarks = await axios.get(
+              `http://localhost:5000/users/bookmarks?userID=${this.props.user.googleId}`
+            );
+            let userFromApi = await axios.get(
+              `http://localhost:5000/users/user?userID=${this.props.user.googleId}`
+            );
+            userAttemptedMCQS = userFromApi.data.mcqsAttempted;
+            this.setState({
+              bookmarks: tempBookmarks.data.bookmarks,
+              attemptedMCQs: userAttemptedMCQS,
+              uselessVal: 500,
+            });
+          }
+        }
+      } else {
+        // tempBookmarks = { data: { bookmarks: [1] } };
+      }
     }
   }
+  // shouldComponentUpdate(nextProps, nextState) {
+  // if (this.state.attemptedMCQs == nextState.attemptedMCQs) {
+  //   return false;
+  // } else {
+  //   return true;
+  // }
+  // }
+  handleUserAnswerPopulation = () => {
+    if (this.props.user) {
+      let userAns = [
+        "Default",
+        "Default",
+        "Default",
+        "Default",
+        "Default",
+        "Default",
+        "Default",
+        "Default",
+        "Default",
+      ];
+      this.state.attemptedMCQs.forEach((attempted) => {
+        console.log(`21`);
+        this.state.mcqs.forEach((mcq, index) => {
+          if (attempted.mcqID === mcq._id) {
+            userAns[index] = attempted.userAnswer;
+          }
+        });
+      });
+      console.log(`----21----`);
+      this.setState({
+        userAns: userAns,
+        uselessVal: 500,
+      });
+    }
+  };
   handleUserAnswers = (i, val) => {
     this.setState((state) => {
       const userAns = state.userAns.map((item, j) => {
@@ -126,15 +205,55 @@ class CenterDiv extends Component {
       };
     });
   };
-  handleAnswerClick(e) {
+  async handleAnswerClick(e) {
     e.preventDefault();
+
+    // * handles the state change
     this.handleUserAnswers(this.state.index, e.target.value);
+
+    // * code to increment user score if the question hasnt been answered yet
     if (this.state.userAns[this.state.index] === "Default") {
       if (e.target.value === this.state.mcqs[this.state.index].correct) {
         this.setState((state) => ({
           userScore: state.userScore + 1,
         }));
       } else {
+      }
+      if (this.props.user) {
+        // * store value for userAns according to the button clicked
+        let userAns = null;
+        if (e.target.value === this.state.mcqs[this.state.index].option1) {
+          userAns = 1;
+        } else if (
+          e.target.value === this.state.mcqs[this.state.index].option2
+        ) {
+          userAns = 2;
+        } else if (
+          e.target.value === this.state.mcqs[this.state.index].option3
+        ) {
+          userAns = 3;
+        } else if (
+          e.target.value === this.state.mcqs[this.state.index].option4
+        ) {
+          userAns = 4;
+        } else {
+        }
+        console.log(
+          `in answer click: userID=${this.props.user.googleId} - mcqID=${
+            this.state.mcqs[this.state.index]._id
+          } - &userAns=${userAns}`
+        );
+        // * code to update the user mcq record at the backend
+        this.setState({
+          uselessVal: 400,
+        });
+        await axios.post(
+          `http://localhost:5000/users/attempt?userID=${
+            this.props.user.googleId
+          }&mcqID=${this.state.mcqs[this.state.index]._id}&userAns=${userAns}`
+        );
+
+        // ? we need to mak
       }
     }
   }
@@ -166,25 +285,33 @@ class CenterDiv extends Component {
   }
   async handleBookmarkClick(e) {
     e.preventDefault();
-    await axios.post(
-      `http://localhost:5000/users/bookmarkQuestion?userID=${
-        this.props.user.googleId
-      }&mcqID=${this.state.mcqs[this.state.index]._id}`
-    );
-    this.setState({
-      uselessVal: 410,
-    });
+    if (this.props.user) {
+      this.setState({
+        uselessVal: 390,
+      });
+      await axios.post(
+        `http://localhost:5000/users/bookmarkQuestion?userID=${
+          this.props.user.googleId
+        }&mcqID=${this.state.mcqs[this.state.index]._id}`
+      );
+    }
   }
   handleShareClick(e) {}
   handleReportClick(e) {}
+
   render() {
     const loaded = this.state.loaded;
     const checkIfBookmarked = () => {
-      if (
-        this.state.bookmarks.indexOf(this.state.mcqs[this.state.index]._id) !==
-        -1
-      ) {
-        return true;
+      if (this.props.user) {
+        if (
+          this.state.bookmarks.indexOf(
+            this.state.mcqs[this.state.index]._id
+          ) !== -1
+        ) {
+          return true;
+        } else {
+          return false;
+        }
       } else {
         return false;
       }
@@ -213,6 +340,20 @@ class CenterDiv extends Component {
       ) : (
         <div className="CenterDiv-remarks">Incorrect!</div>
       );
+    const statsDiv = this.props.user ? (
+      <Statistics
+        subject={this.props.activePath}
+        chapter={this.props.chapterSelected}
+        user={this.props.user}
+        totalQuestions={20}
+        attemptedQuestions={10}
+        correctQuestions={8}
+      />
+    ) : (
+      <div className="Statistics-loggedOut">
+        Please log in to view your stats
+      </div>
+    );
     return (
       <div className="CenterDiv">
         {loaded && (
@@ -230,14 +371,7 @@ class CenterDiv extends Component {
             />
             {remarks}
             {prevNextButtons}
-            <Statistics
-              subject={this.props.activePath}
-              chapter={this.props.chapterSelected}
-              user={this.props.user}
-              totalQuestions={20}
-              attemptedQuestions={10}
-              correctQuestions={8}
-            />
+            {statsDiv}
           </React.Fragment>
         )}
       </div>

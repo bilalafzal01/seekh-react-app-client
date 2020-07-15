@@ -31,7 +31,10 @@ class Statistics extends Component {
           <div className="guage-chart">
             <ReactSpeedometer
               maxValue={100}
-              value={66}
+              value={
+                (this.props.correctQuestions / this.props.attemptedQuestions) *
+                100
+              }
               needleColor="#303960"
               startColor="#d9455f"
               segments={4}
@@ -39,7 +42,18 @@ class Statistics extends Component {
               width={300}
               height={200}
             />
-            <div>{this.state.remarks[0]}</div>
+            <div>
+              {
+                this.state.remarks[
+                  Math.floor(
+                    ((this.props.correctQuestions /
+                      this.props.attemptedQuestions) *
+                      100) /
+                      25
+                  )
+                ]
+              }
+            </div>
           </div>
         </div>
       </div>
